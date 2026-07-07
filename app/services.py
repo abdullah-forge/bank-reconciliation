@@ -53,3 +53,45 @@ def process_reconciliation(bank_bytes : bytes , ledger_bytes : bytes):
                 "date_diff_days": int(best_diff)
             }
             )
+    # Unmatched
+    unmatched_bank = []
+    for b_idx, b_row in bank.iterrows():
+        if not any(m["bank_date"] == b_row["date"].strftime("%Y-%m-%d") and 
+                   np.isclose(m["bank_amount"], b_row["amount"]) for m in matched):
+            unmatched_bank.append({
+                "date": b_row["date"].strftime("%Y-%m-%d"),
+                "amount": round(float(b_row["amount"]), 2),
+                "description": b_row["description"],
+                "source": "bank"
+            })
+    
+    unmatched_ledger = []
+    for l_idx, l_row in ledger.iterrows():
+        if l_idx not in ledger_used:
+            unmatched_ledger.append({
+                "date": l_row["date"].strftime("%Y-%m-%d"),
+                "amount": round(float(l_row["amount"]), 2),
+                "description": l_row["description"],
+                "source": "ledger"
+            })
+    
+    # Summary
+    bank_total = float(bank["amount"].sum())
+    ledger_total = float(ledger["amount"].sum())
+    
+    summary = {
+        "bank_total": round(bank_total, 2),
+        "ledger_total": round(ledger_total, 2),
+        "difference": round(bank_total - ledger_total, 2),
+        "matched_count": len(matched),
+        "unmatched_bank_count": len(unmatched_bank),
+        "unmatched_ledger_count": len(unmatched_ledger)
+    }
+    
+    return {
+        "matched": matched,
+        "unmatched_bank": unmatched_bank,
+        "unmatched_ledger": unmatched_ledger,
+        "summary": summary
+    }
+
