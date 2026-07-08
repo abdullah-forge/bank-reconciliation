@@ -61,7 +61,8 @@ def process_and_save(job_id : int, bank_bytes: bytes, ledger_bytes : bytes, db:S
     
 @router.get("/status/{job_id}")
 async def get_status(job_id: int, db : Session = Depends(get_db)):
-    job = db.query(ReconciliationJob).filter(ReconciliationJob.id == job.id).first()
+    #job = db.query(ReconciliationJob).filter(ReconciliationJob.id == job.id).first()
+    job = db.query(ReconciliationJob).filter(ReconciliationJob.id == job_id).first()
     if not job:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail= "Job not found")
     if job.status == "processing":
