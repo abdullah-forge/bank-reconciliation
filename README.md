@@ -50,7 +50,7 @@
 ### Method 1: Live API (Render)
 **No setup needed.** Just visit the live URL and test.
 
-1. Go to [Live Demo](https://your-app.onrender.com/docs)
+1. Go to [Live Demo](https://bank-reconciliation-kg87.onrender.com/docs)
 2. Click `POST /api/v1/reconcile`
 3. Upload `bank_statement.csv` and `internal_ledger.csv`
 4. Copy `job_id` from response
