@@ -41,7 +41,8 @@ async def reconcile(background_tasks: BackgroundTasks,
 def process_and_save(job_id : int, bank_bytes: bytes, ledger_bytes : bytes, db:Session):
     try:
         result = process_reconciliation(bank_bytes, ledger_bytes)
-        job = db.query(ReconciliationJob.id).filter(ReconciliationJob.id==job.id).first()
+        #job = db.query(ReconciliationJob.id).filter(ReconciliationJob.id==job.id).first()
+        job = db.query(ReconciliationJob).filter(ReconciliationJob.id == job_id).first()
         job.status = "completed"
         job.bank_total = result["summary"]["bank_total"]
         job.ledger_total = result["summary"]["ledger_total"]
