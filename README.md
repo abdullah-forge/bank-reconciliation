@@ -220,5 +220,5 @@ MIT
 👤 Author
 Muhammad Abdullah — Computer Engineering @ COMSATS University Islamabad
 GitHub: https://github.com/abdullah-forge
-LinkedIn: Muhammad Abdullah
+LinkedIn: https://www.linkedin.com/in/m-abdullah-ce/
 Email: whello544@gmail.com
